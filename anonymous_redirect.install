@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function anonymous_redirect_uninstall() {
+  variable_del('anonymous_redirect_enable');
+  variable_del('anonymous_redirect_base');
+}
