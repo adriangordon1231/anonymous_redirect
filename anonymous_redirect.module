@@ -26,7 +26,7 @@ function anonymous_redirect_init() {
 
   // Only continue if the current request should be redirected.
   if (!variable_get('anonymous_redirect_enable', FALSE)
-   || trim(variable_get('anonymous_redirect_url', '')) == ''
+   || trim(variable_get('anonymous_redirect_base', '')) == ''
    || user_is_logged_in()
    || arg(0) == 'user'
    || drupal_is_cli()) {
