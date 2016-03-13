@@ -1,45 +1,24 @@
 <?php
 
 /**
- * Implements hook_menu().
+ * @file
+ * Contains anonymous_redirect.module..
  */
-function anonymous_redirect_menu() {
-  $items = array();
-  // Module settings.
-  $items['admin/config/system/anonymous-redirect'] = array(
-    'title' => 'Anonymous redirect',
-    'description' => 'Enable and configure Anonymous Redirect settings.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('anonymous_redirect_settings'),
-    'access arguments' => array('administer site configuration'),
-    'file' => 'anonymous_redirect.admin.inc',
-  );
-  return $items;
-}
+
+use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
- * Implements hook_init().
+ * Implements hook_help().
  */
-function anonymous_redirect_init() {
+function anonymous_redirect_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the anonymous_redirect module.
+    case 'help.page.anonymous_redirect':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Redirects anonymous users to the /user page or another domain.');
+      return $output;
 
-  global $base_url;
-
-  // Only continue if the current request should be redirected.
-  if (!variable_get('anonymous_redirect_enable', FALSE)
-   || trim(variable_get('anonymous_redirect_base', '')) == ''
-   || user_is_logged_in()
-   || arg(0) == 'user'
-   || drupal_is_cli()) {
-    return;
+    default:
   }
-
-  // Make sure there isn't a redirect loop.
-  $redirect_base = variable_get('anonymous_redirect_base', '');
-  if ($redirect_base == $base_url) {
-    return;
-  }
-
-  // Redirect.
-  drupal_goto($redirect_base . '/' . request_path(), array('query' => drupal_get_query_parameters()), 307);
-
 }

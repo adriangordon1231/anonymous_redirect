@@ -1,30 +1,28 @@
+SUMMARY
+=======
 
--- SUMMARY --
-
-* The Anonymous Redirect module redirects anonymous users to another domain.
-* Users can still login by visiting /user or /user/login.
-* Authenticated users can access the site as per usual.
-
-
--- INSTALLATION --
-
-* Install as usual, see http://drupal.org/node/895232 for further information.
+Anonymous Redirect is a drupal 8 implementation of the D7 anonymous_redirect module with a few improvements.
+The module grants users with admin privileges the ability to redirect all anonymous users to any internal or external urls.
+Authenticated are still able to access the site as per usual.
 
 
--- CONFIGURATION (UI) --
+INSTALLATION
+============
 
-Visit admin/config/development/anonymous-redirect
+No special install steps are necessary to use this module, see https://www.drupal.org/documentation/install/modules-themes/modules-8 for further information.
 
 
--- CONFIGURATION (SETTINGS.PHP) --
+CONFIGURATION
+=============
 
-You can also enable/disable anonymous redirect via settings.php.
+Visit admin/config/development/anonymous-redirect. From here you will be able to: 
 
-This is particularly helpful if you want this always enabled on your staging
-site without having to disable and enable the module when syncing your database
-from production to staging/development. Just add the following to the bottom of
-the appropriate settings.php file.
+* Turn on and off anonymous redirects
+* Set the path that anonymous users are redirected to
+* Use '<front>' or '/path_name' for internal urls, and "http://website_url.com" for external links.
 
-// Make sure anonymous redirect is always enabled / disabled.
-$conf['anonymous_redirect_enable'] = TRUE; // Set to FALSE to disable.
-$conf['anonymous_redirect_base'] = 'http://example.com';
+
+Maintainer
+==========
+
+* Adrian Gordon (adrian1231) - https://www.drupal.org/u/adrian1231

@@ -1,4 +1,0 @@
-name = Anonymous Redirect
-description = "Redirects anonymous users to another domain."
-core = 7.x
-configure = admin/config/system/anonymous-redirect

@@ -1,0 +1,6 @@
+name: Anonymous Redirect
+type: module
+description: Redirects anonymous users to a pre-defined route or another domain
+core: 8.x
+package: anonymous_redirect
+configure: anonymous_redirect.settings
