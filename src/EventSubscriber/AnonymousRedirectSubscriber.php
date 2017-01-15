@@ -44,12 +44,10 @@ class AnonymousRedirectSubscriber extends ControllerBase implements EventSubscri
     $redirectUrl = $config->get('redirect_url');
     $currentPath = $event->getRequest()->getPathInfo();
     $currentUser = \Drupal::currentUser();
-    $userRoles = $currentUser->getRoles();
 
 
-    // do nothing is redirect_url is not enabled
-    // do nothing is the user's role is not "anonymous"
-    if (!$redirectEnabled || in_array('anonymous', $userRoles) == FALSE) {
+    // Do nothing if redirect_url is not enabled or if the user is authenticated.
+    if (!$redirectEnabled || $currentUser->isAuthenticated()) {
       return;
     }
 
