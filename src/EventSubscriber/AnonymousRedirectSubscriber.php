@@ -10,6 +10,7 @@ namespace Drupal\anonymous_redirect\EventSubscriber;
 
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\Component\Utility\UrlHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -52,11 +53,10 @@ class AnonymousRedirectSubscriber extends ControllerBase implements EventSubscri
     }
 
 
-    // if the redirect url contains "http://" it is assumed to be an external url
-    if ($this->containsHTTP($redirectUrl)) {
-      $event->setResponse(new TrustedRedirectResponse($redirectUrl));
-
-      return;
+    // External URL must use TrustedRedirectResponse class.
+    if (UrlHelper::isExternal($redirectUrl)) {
+       $event->setResponse(new TrustedRedirectResponse($redirectUrl));
+       return;
     }
 
 
@@ -73,26 +73,6 @@ class AnonymousRedirectSubscriber extends ControllerBase implements EventSubscri
 
 
   }
-
-
-
-
-  /**
-   * Returns true if the entered string contains 'http://'
-   *
-   * @param $urlString
-   *
-   * @return bool
-   */
-  public function containsHTTP($urlString) {
-
-    if (strpos($urlString, 'http://') !== FALSE) {
-      return TRUE;
-    }
-
-    return FALSE;
-  }
-
 
 
 
