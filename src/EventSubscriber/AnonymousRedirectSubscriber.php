@@ -25,7 +25,7 @@ class AnonymousRedirectSubscriber extends ControllerBase implements EventSubscri
    */
   public static function getSubscribedEvents() {
 
-    $events[KernelEvents::REQUEST][] = ['redirectAnonymous'];
+    $events[KernelEvents::REQUEST][] = ['redirectAnonymous', 100];
     return $events;
   }
 
