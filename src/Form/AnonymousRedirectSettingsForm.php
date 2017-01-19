@@ -61,6 +61,14 @@ class AnonymousRedirectSettingsForm extends ConfigFormBase {
       "#default_value" => $config->get('redirect_url'),
     );
 
+    $form['redirect_url_overrides'] = array(
+      '#type' => 'textarea',
+      '#title' => $this->t('Redirect URL Overrides'),
+      '#description' => $this->t("A list of internal paths to ignore the redirect for. One path per line. (eg. '/path')"),
+      '#rows' => 4,
+      '#default_value' => $config->get('redirect_url_overrides'),
+    );
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -74,6 +82,7 @@ class AnonymousRedirectSettingsForm extends ConfigFormBase {
 
     $this->config('anonymous_redirect.settings')->set('enable_redirect', $form_state->getValue('enable_anonymous_redirect'));
     $this->config('anonymous_redirect.settings')->set('redirect_url',$form_state->getValue('redirect_base_url'));
+    $this->config('anonymous_redirect.settings')->set('redirect_url_overrides',$form_state->getValue('redirect_url_overrides'));
 
     $this->config('anonymous_redirect.settings')->save();
 
