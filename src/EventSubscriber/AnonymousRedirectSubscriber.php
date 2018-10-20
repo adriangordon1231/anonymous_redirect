@@ -43,10 +43,12 @@ class AnonymousRedirectSubscriber extends ControllerBase implements EventSubscri
 
     $redirectEnabled = $config->get('enable_redirect');
     $redirectUrl = $config->get('redirect_url');
-    $redirectUrlOverrides = $config->get('redirect_url_overrides');
-    $redirectUrlOverrides = $redirectUrlOverrides ? explode("\r\n", $redirectUrlOverrides) : array();
+    $redirectUrlOverridesText = $config->get('redirect_url_overrides');
+    $redirectUrlOverrides = $redirectUrlOverridesText ? explode("\r\n", $redirectUrlOverridesText) : array();
     $currentPath = $event->getRequest()->getPathInfo();
     $currentUser = \Drupal::currentUser();
+    /** @var \Drupal\Core\Path\PathMatcher $pathMatcher */
+    $pathMatcher = \Drupal::service('path.matcher');
 
 
     // Do nothing if redirect_url is not enabled or if the user is authenticated.
@@ -55,14 +57,14 @@ class AnonymousRedirectSubscriber extends ControllerBase implements EventSubscri
     }
 
     // Do nothing if the url is in the list of overrides
-    if (in_array($currentPath, $redirectUrlOverrides)) {
+    if (in_array($currentPath, $redirectUrlOverrides) || $pathMatcher->matchPath($currentPath, $redirectUrlOverridesText)) {
       return;
     }
 
     // External URL must use TrustedRedirectResponse class.
     if (UrlHelper::isExternal($redirectUrl)) {
-       $event->setResponse(new TrustedRedirectResponse($redirectUrl));
-       return;
+      $event->setResponse(new TrustedRedirectResponse($redirectUrl));
+      return;
     }
 
 
