@@ -19,7 +19,8 @@ Visit admin/config/development/anonymous-redirect. From here you will be able to
 
 * Turn on and off anonymous redirects
 * Set the path that anonymous users are redirected to
-* Use '<front>', '/path_name' or wildcards ('*') for internal urls, and "http://website_url.com" for external links.
+* Use '<front>' or '/path_name' internal urls, and "http://website_url.com" for external links.
+* Wildcards (*) are supported for URL Overrides
 
 
 Maintainer
